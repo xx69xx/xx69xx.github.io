@@ -4,8 +4,8 @@ canvas.setAttribute("width", window.innerWidth-275);
 canvas.setAttribute("height", window.innerHeight-50);
 
 var player = {lvl:1, xp:0, dmg:10, hp:100, maxhp:100};
-var slimes = {lvl:1, xp:0, hp:50, dmg:5};
-var enemies = [{hp:slimes.hp, dmg:slimes.dmg}];
+var slimes = {lvl:1, xp:0, dmg:5, hp:50};
+var enemies = [{dmg:slimes.dmg, hp:slimes.hp, maxhp:slimes.hp}];
 
 var framecount = 0;
 
@@ -32,10 +32,12 @@ function attack(){
 		if(player.hp<=0){
 			alert("you died");
 			location.reload();
+
 		}
 	}
-	
+
 	enemies[0].hp -= player.dmg;
+	player.hp=player.maxhp;
 	if(enemies[0].hp<=0){
 		enemies.shift();
 		player.xp += 100;
@@ -43,14 +45,13 @@ function attack(){
 			player.xp = 0;
 			player.lvl++;
 			player.maxhp+=10;
-			player.hp=player.maxhp;
 			player.dmg+=10;
 		}
 	}
 }
 
 function spawn(){
-	enemies.push({hp:slimes.hp, dmg:slimes.dmg});
+	enemies.push({dmg:slimes.dmg, hp:slimes.hp, maxhp:slimes.hp});
 }
 
 function menu(){
@@ -61,8 +62,11 @@ function menu(){
 	document.getElementById("player_maxhp").innerHTML = player.maxhp;
 	document.getElementById("player_dmg").innerHTML = player.dmg;
 
-	document.getElementById("enemy_hp").innerHTML = enemies[0].hp;
-	document.getElementById("enemy_dmg").innerHTML = enemies[0].dmg;
+	document.getElementById("enemies").innerHTML = "";
+	for(var i = 0; i < enemies.length; i++){
+		document.getElementById("enemies").innerHTML += "Hp: " + enemies[i].hp + "/" + enemies[i].maxhp + "<br>";
+		document.getElementById("enemies").innerHTML += "Damage: " + enemies[i].dmg + "<br><br>";
+	}
 }
 
 function draw(){
