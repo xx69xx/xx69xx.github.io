@@ -37,9 +37,9 @@ function attack(){
 	}
 
 	enemies[0].hp -= player.dmg;
-	player.hp=player.maxhp;
 	if(enemies[0].hp<=0){
 		enemies.shift();
+		player.hp=player.maxhp;
 		player.xp += 100;
 		if(player.xp>=player.lvl*100){
 			player.xp = 0;
