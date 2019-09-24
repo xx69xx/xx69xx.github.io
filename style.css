@@ -1,16 +1,194 @@
 body{
 	margin: 0;
+	background-color: black;
+	color: white;
+	user-select: none;
+	font-size: 1em;
 }
 
-#canvas {
+/* area */
+#area{
 	position: absolute;
-	top:25px;
-	right:25px;
-	border: 1px solid black;
+	width: calc(25% - 25px);
+	height: calc(20% + 25px);
+	left: 25px;
+	top: 25px;
+	font-size: 200%;
+}
+/* area */
+
+/* enemy */
+#enemy{
+	position: absolute;
+	width: 50%;
+	height: 15%;
+	left: 25%;
+	top: calc(5% + 50px);
 }
 
+#enemybars{
+	position: absolute;
+	width: 50%;
+	height: 5%;
+	left: 25%;
+	top: 25px;
+	font-size: 150%;
+}
+#enemybarcontainer{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	left: 0;
+	outline: 1px solid white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+#enemyhpbar{
+	z-index: -1;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color: red;
+}
+/* enemy */
+
+/* wave */
+#wave{
+	position: absolute;
+	width: calc(25% - 25px);
+	height: calc(20% + 25px);
+	right: 25px;
+	top: 25px;
+	font-size: 200%;
+	text-align: right;
+}
+/* wave */
+
+/* main */
+#main{
+	position: absolute;
+	width: calc(60% - 100px);
+	height: calc(60% - 100px);
+	left: calc(20% + 50px);
+	top: calc(20% + 50px);
+}
+/* main */
+
+/* player */
+#player{
+	position: absolute;
+	width: calc(25% - 25px);
+	height: 10%;
+	left: 25px;
+	bottom: calc(8% + 50px);
+}
+
+#bars{
+	position: absolute;
+	width: calc(25% - 25px);
+	height: 10%;
+	left: 25px;
+	bottom: 25px;
+}
+.barcontainer{
+	position: absolute;
+	width: 100%;
+	left: 0;
+	outline: 1px solid white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+#hpbarcontainer{
+	height: 25%;
+	top: 0;
+}
+#staminabarcontainer{
+	height: 25%;
+	top: 37.5%;
+}
+#xpbarcontainer{
+	height: 25%;
+	top: 75%;
+}
+.bar{
+	z-index: -1;
+	position: absolute;
+	height: 100%;
+	left: 0;
+}
+#hpbar{
+	width: 100%;
+	background-color: red;
+}
+#staminabar{
+	width: 100%;
+	background-color: green;
+}
+#xpbar{
+	width: 0%;
+	background-color: gray;
+}
+/* player */
+
+/* abilities */
+.abilities{
+	position: absolute;
+	width: 50%;
+	height: calc(20% + 25px);
+	left: 25%;
+	bottom: 25px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.abilitycd{
+	width: 20%;
+	height: 100%;
+	margin-left: 5%;
+	margin-right: 5%;
+	outline: 1px solid white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.abilityinfo{
+	width: 20%;
+	height: 100%;
+	margin-left: 5%;
+	margin-right: 5%;
+}
+.abilitybar{
+	z-index: -1;
+	position: absolute;
+	width: 20%;
+	height: 100%;
+	border-radius: 0%;
+	background-color: gray;
+}
+/* abilities */
+
+/* menu */
 #menu{
 	position: absolute;
-	margin-left: 25px;
-	margin-top: 25px;
+	width: calc(25% - 25px);
+	height: calc(20% + 25px);
+	right: 25px;
+	bottom: 25px;
+	font-size: 150%;
+	text-align: right;
 }
+#battleselection{
+	visibility: visible;
+}
+#worldselection{
+	visibility: hidden;
+}
+#inventoryselection{
+	visibility: hidden;
+}
+#settingsselection{
+	visibility: hidden;
+}
+/* menu */

@@ -1,108 +1,75 @@
-var canvas = document.getElementById("canvas");
-var ctx = canvas.getContext("2d");
-canvas.setAttribute("width", window.innerWidth-275);
-canvas.setAttribute("height", window.innerHeight-50);
-
-var player = {lvl:1, xp:0, dmg:10, hp:100, maxhp:100};
-var slimes = {lvl:1, xp:0, dmg:10, hp:50};
-var enemies = [{dmg:slimes.dmg, hp:slimes.hp, maxhp:slimes.hp}];
+var player = {
+	hp:100, maxhp:100, 
+	stamina:75, maxstamina:100, 
+	xp:0, maxxp:100, lvl:1, 
+	ability1timer:4.5, ability1cd:5, ability2timer:10, ability2cd: 10, ability3timer:7.0, ability3cd:20
+};
+var enemy = {hp:30, maxhp:50};
 
 var framecount = 0;
 
 function frame(){
 	framecount++;
 
-	if(framecount%60==0){
-		attack();
+	if(framecount%1==0){
+		player.hp-=1;
+		if(player.hp<=0){player.hp = player.maxhp;}
+
+		player.stamina-=2;
+		if(player.stamina<=0){player.stamina = player.maxstamina;}
+
+		player.xp+=1;
+		if(player.xp>=player.maxxp){player.xp = 0;}
+
+		player.ability1timer-=1/60;
+		if(player.ability1timer<=0){player.ability1timer = player.ability1cd;}
+		
+		player.ability2timer-=1/60;
+		if(player.ability2timer<=0){player.ability2timer = player.ability2cd;}
+
+		player.ability3timer-=1/60;
+		if(player.ability3timer<=0){player.ability3timer = 0;}
+
+		enemy.hp-=1;
+		if(enemy.hp<=0){enemy.hp = enemy.maxhp;}
 	}
 
-	if(framecount%120==0){
-		spawn();
-	}
-
-	menu();
-	draw();
-
+	update();
 	requestAnimationFrame(frame);
 }
 
-function attack(){
-	for(var i = 0; i < enemies.length; i++){
-		player.hp -= enemies[i].dmg;
-		if(player.hp<=0){
-			alert("you died");
-			location.reload();
+function update(){
+	document.getElementById("hp").innerHTML = player.hp;
+	document.getElementById("maxhp").innerHTML = player.maxhp;
+	document.getElementById("hpbar").style.width = player.hp/player.maxhp*100 + "%";
 
-		}
-	}
+	document.getElementById("stamina").innerHTML = player.stamina;
+	document.getElementById("maxstamina").innerHTML = player.maxstamina;
+	document.getElementById("staminabar").style.width = player.stamina/player.maxstamina*100 + "%";
 
-	for(var i = 0; i < enemies.length; i++){
-		enemies[i].hp -= player.dmg;
-		if(enemies[i].hp<=0){
-			enemies.shift();
-			player.hp=player.maxhp;
-			player.xp += 50;
-			if(player.xp>=player.lvl*100){
-				player.xp = 0;
-				player.lvl++;
-				player.maxhp+=10;
-				player.dmg+=10;
-			}
-		}
-	}
-}
+	document.getElementById("xp").innerHTML = player.xp;
+	document.getElementById("maxxp").innerHTML = player.maxxp;
+	document.getElementById("xpbar").style.width = player.xp/player.maxxp*100 + "%";
 
-function spawn(){
-	enemies.push({dmg:slimes.dmg, hp:slimes.hp, maxhp:slimes.hp});
-}
+	document.getElementById("ability1timer").innerHTML = (player.ability1timer).toFixed(1);
+	document.getElementById("ability1bar").style.width = (player.ability1cd-player.ability1timer)/player.ability1cd*20 + "%";
+	document.getElementById("ability1bar").style.height = (player.ability1cd-player.ability1timer)/player.ability1cd*100 + "%";
+	if((player.ability1cd-player.ability1timer)/player.ability1cd!==1){document.getElementById("ability1bar").style.borderRadius = "50%";}
+	else{document.getElementById("ability1bar").style.borderRadius = "0%";}
+	document.getElementById("ability2timer").innerHTML = (player.ability2timer).toFixed(1);
+	document.getElementById("ability2bar").style.width = (player.ability2cd-player.ability2timer)/player.ability2cd*20 + "%";
+	document.getElementById("ability2bar").style.height = (player.ability2cd-player.ability2timer)/player.ability2cd*100 + "%";
+	if((player.ability2cd-player.ability2timer)/player.ability2cd!==1){document.getElementById("ability2bar").style.borderRadius = "50%";}
+	else{document.getElementById("ability2bar").style.borderRadius = "0%";}
+	document.getElementById("ability3timer").innerHTML = (player.ability3timer).toFixed(1);
+	document.getElementById("ability3bar").style.width = (player.ability3cd-player.ability3timer)/player.ability3cd*20 + "%";
+	document.getElementById("ability3bar").style.height = (player.ability3cd-player.ability3timer)/player.ability3cd*100 + "%";
+	if((player.ability3cd-player.ability3timer)/player.ability3cd!==1){document.getElementById("ability3bar").style.borderRadius = "50%";}
+	else{document.getElementById("ability3bar").style.borderRadius = "0%";}
 
-function menu(){
-	document.getElementById("player_lvl").innerHTML = player.lvl;
-	document.getElementById("player_xp").innerHTML = player.xp;
-	document.getElementById("player_maxxp").innerHTML = player.lvl*100;
-	document.getElementById("player_hp").innerHTML = player.hp;
-	document.getElementById("player_maxhp").innerHTML = player.maxhp;
-	document.getElementById("player_dmg").innerHTML = player.dmg;
-
-	document.getElementById("enemies").innerHTML = "";
-	for(var i = 0; i < enemies.length; i++){
-		document.getElementById("enemies").innerHTML += "Hp: " + enemies[i].hp + "/" + enemies[i].maxhp + "<br>";
-		document.getElementById("enemies").innerHTML += "Damage: " + enemies[i].dmg + "<br><br>";
-	}
-}
-
-function draw(){
-	ctx.clearRect(0,0,canvas.width,canvas.height);
-	ctx.lineWidth = 5;
-
-	ctx.fillStyle = "rgb("+Math.round(255-player.hp/100*255)+", "+Math.round(255-player.hp/100*255)+","+Math.round(255-player.hp/100*255)+")";
-	ctx.strokeStyle = "rgb("+Math.round(255-player.hp/100*255)+", "+Math.round(255-player.hp/100*255)+","+Math.round(255-player.hp/100*255)+")";
-	ctx.beginPath();
-	ctx.arc(canvas.width/4,canvas.height/2,50,0,Math.PI*2);
-	ctx.closePath();
-	ctx.fill();
-	ctx.stroke();
-
-	if(framecount%60<15){
-		ctx.fillStyle = "red";
-		ctx.strokeStyle = "red";
-		ctx.beginPath();
-		ctx.rect(canvas.width/4+50,canvas.height/2-5,canvas.width/4*3,10);
-		ctx.closePath();
-		ctx.fill();
-		ctx.stroke();
-	}
-
-	for(var i = 0; i < enemies.length; i++){
-		ctx.fillStyle = "rgb("+Math.round(255-enemies[i].hp/50*255)+", "+Math.round(255-enemies[i].hp/50*255)+","+Math.round(255-enemies[i].hp/50*255)+")";
-		ctx.strokeStyle = "rgb("+Math.round(255-enemies[i].hp/50*255)+", "+Math.round(255-enemies[i].hp/50*255)+","+Math.round(255-enemies[i].hp/50*255)+")";
-		if(framecount%60<15){ctx.strokeStyle = "red";}
-		ctx.beginPath();
-		ctx.arc(canvas.width/4*2+i*60,canvas.height/2,25,0,Math.PI*2);
-		ctx.closePath();
-		ctx.fill();
-		ctx.stroke();
-	}
+	document.getElementById("enemyhp").innerHTML = enemy.hp;
+	document.getElementById("enemymaxhp").innerHTML = enemy.maxhp;
+	document.getElementById("enemyhpbar").style.width = enemy.hp/enemy.maxhp*100 + "%";
 }
 
 frame();

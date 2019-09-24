@@ -1,27 +1,75 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>game</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Game</title>
 		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
 	<body>
-		<div id="menu">
-			PLAYER:<br>
-			<hr>
-			Level: <font id="player_lvl"></font><br>
-			Xp: <font id="player_xp"></font>/<font id="player_maxxp"></font><br>
-			Hp: <font id="player_hp"></font>/<font id="player_maxhp"></font><br>
-			Damage: <font id="player_dmg"></font><br>
-			<br><br>
-			ENEMIES:<br>
-			<hr>
-			<div id="enemies">
-
+		<div id="main"></div>
+		
+		<div id="area">
+			Area name
+		</div>
+		<div id="enemybars">
+			<div id="enemybarcontainer"><div id="enemyhpbar"></div><a id="enemyhp"></a>/<a id="enemymaxhp"></a></div>
+		</div>
+		<div id="enemy">
+			ENEMY <br><br>
+			Stat 1: ................ &nbsp; Stat 4: ................<br>
+			Stat 2: ................ &nbsp; Stat 5: ................<br>
+			Stat 3: ................ &nbsp; Stat 6: ................
+		</div>
+		<div id="wave">
+			Wave <br>
+			1/10
+		</div>
+		<div class="abilities" id="abilitiescd">
+			<div class="abilitycd" id="ability1cd">
+				<div class="abilitybar" id="ability1bar"></div>
+				<a id="ability1timer"></a>
+			</div>
+			<div class="abilitycd" id="ability2cd">
+				<div class="abilitybar" id="ability2bar"></div>
+				<a id="ability2timer"></a>
+			</div>
+			<div class="abilitycd" id="ability3cd">
+				<div class="abilitybar" id="ability3bar"></div>
+				<a id="ability3timer"></a>
 			</div>
 		</div>
-
-		<canvas id="canvas"></canvas>
+		<div class="abilities" id="abilitiesinfo">
+			<div class="abilityinfo" id="ability1info">
+				Ability 1: <br>
+				- CD: 5 seconds <br>
+				- Stamina: 10
+			</div>
+			<div class="abilityinfo" id="ability2info">
+				Ability 2: <br>
+				- CD: 10 seconds <br>
+				- Stamina: 30
+			</div>
+			<div class="abilityinfo" id="ability3info">
+				Ability 3: <br>
+				- CD: 20 seconds <br>
+				- Stamina: 75
+			</div>
+		</div>
+		<div id="menu">
+			Battle <a id="battleselection">&#9670;</a><br>
+			World <a id="worldselection">&#9670;</a><br>
+			Inventory <a id="inventoryselection">&#9670;</a><br>
+			Settings <a id="settingsselection">&#9670;</a>
+		</div>
+		<div id="player">
+			YOU <br>
+			Stat 1: ................ &nbsp; Stat 3: ................<br>
+			Stat 2: ................ &nbsp; Stat 4: ................
+		</div>
+		<div id="bars">
+			<div class="barcontainer" id="hpbarcontainer"><div class="bar" id="hpbar"></div><a id="hp"></a>/<a id="maxhp"></a></div>
+			<div class="barcontainer" id="staminabarcontainer"><div class="bar" id="staminabar"></div><a id="stamina"></a>/<a id="maxstamina"></a></div>
+			<div class="barcontainer" id="xpbarcontainer"><div class="bar" id="xpbar"></div><a id="xp">0</a>/<a id="maxxp"></a></div>
+		</div>
 	</body>
 	<script src="script.js"></script>
 </html>
